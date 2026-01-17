@@ -10,11 +10,12 @@ import IOKit
 // MARK: - System Info
 
 /// macOS system information
-public final class SystemInfo: @unchecked Sendable {
+@MainActor
+public final class SystemInfo {
     
     // MARK: - Singleton
     
-    nonisolated public static let shared = SystemInfo()
+    public static let shared = SystemInfo()
     
     // MARK: - Properties
     
@@ -151,7 +152,8 @@ public final class SystemInfo: @unchecked Sendable {
             0
         ) else { return nil }
         
-        return serialNumber.takeUnretainedValue() as? String
+        // Use takeRetainedValue() for Create rule APIs to avoid memory leak
+        return serialNumber.takeRetainedValue() as? String
     }
     
     /// Get boot time
@@ -211,10 +213,14 @@ public final class SystemInfo: @unchecked Sendable {
     
     private static func getHardwareModel() -> String {
         var size: Int = 0
-        sysctlbyname("hw.model", nil, &size, nil, 0)
+        guard sysctlbyname("hw.model", nil, &size, nil, 0) == 0, size > 0 else {
+            return "Unknown"
+        }
         
         var model = [CChar](repeating: 0, count: size)
-        sysctlbyname("hw.model", &model, &size, nil, 0)
+        guard sysctlbyname("hw.model", &model, &size, nil, 0) == 0 else {
+            return "Unknown"
+        }
         
         // Convert to UInt8 array and decode, truncating null terminator
         let bytes = model.map { UInt8(bitPattern: $0) }

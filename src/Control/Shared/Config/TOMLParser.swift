@@ -94,7 +94,7 @@ public final class TOMLParser {
         } catch {
             // Try to extract line number from error
             let errorString = String(describing: error)
-            if let lineMatch = errorString.range(of: #"line \d+"#, options: .regularExpression) {
+            if errorString.range(of: #"line \d+"#, options: .regularExpression) != nil {
                 throw TOMLParserError.invalidSyntax(line: 0, message: errorString)
             }
             throw TOMLParserError.invalidSyntax(line: 0, message: errorString)
@@ -213,7 +213,7 @@ public final class TOMLParser {
     }
     
     private static func iterateTable(_ table: TOMLTable) -> [(String, Any)] {
-        var result: [(String, Any)] = []
+        let result: [(String, Any)] = []
         
         // Use subscript access with known keys
         // Note: TOMLKit's TOMLTable doesn't expose iteration directly

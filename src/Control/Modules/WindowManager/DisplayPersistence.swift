@@ -312,7 +312,7 @@ public final class DisplayPersistence: @unchecked Sendable {
                 let width = CGFloat(sqlite3_column_double(statement, 2))
                 let height = CGFloat(sqlite3_column_double(statement, 3))
                 let displayId = UInt32(sqlite3_column_int(statement, 4))
-                let timestamp = Date(timeIntervalSince1970: TimeInterval(sqlite3_column_int64(statement, 5)))
+                let _ = Date(timeIntervalSince1970: TimeInterval(sqlite3_column_int64(statement, 5)))
                 
                 result = SavedWindowPosition(
                     bundleId: bundleId,

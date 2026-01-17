@@ -52,21 +52,30 @@ public struct PathValidator: Validator {
     public func validate(_ path: String) -> ValidationResult {
         let fm = FileManager.default
         
+        // Normalize the path: expand tilde and resolve symlinks
+        let expandedPath = (path as NSString).expandingTildeInPath
+        let url = URL(fileURLWithPath: expandedPath)
+        let normalizedPath = url.standardized.resolvingSymlinksInPath().path
+        
         // Check existence
-        if mustExist && !fm.fileExists(atPath: path) {
+        if mustExist && !fm.fileExists(atPath: normalizedPath) {
             return .invalid(reason: "Path does not exist: \(path)")
         }
         
         // Check writability
-        if mustBeWritable && !fm.isWritableFile(atPath: path) {
+        if mustBeWritable && !fm.isWritableFile(atPath: normalizedPath) {
             return .invalid(reason: "Path is not writable: \(path)")
         }
         
         // Check extension
         if let allowed = allowedExtensions {
-            let ext = (path as NSString).pathExtension.lowercased()
-            if !allowed.contains(ext) {
-                return .invalid(reason: "Invalid extension: \(ext). Allowed: \(allowed.joined(separator: ", "))")
+            // Normalize allowed extensions: lowercase and strip leading dots
+            let normalizedAllowed = allowed.map { ext in
+                ext.lowercased().trimmingCharacters(in: CharacterSet(charactersIn: "."))
+            }
+            let ext = (normalizedPath as NSString).pathExtension.lowercased()
+            if !normalizedAllowed.contains(ext) {
+                return .invalid(reason: "Invalid extension: \(ext). Allowed: \(normalizedAllowed.joined(separator: ", "))")
             }
         }
         
@@ -180,10 +189,18 @@ public enum Validation {
         let validModifiers = ["cmd", "command", "ctrl", "control", "alt", "option", "shift"]
         let modifiers = parts.dropLast()
         
+        // Validate all modifiers
         for mod in modifiers {
             if !validModifiers.contains(mod) {
                 return false
             }
+        }
+        
+        // Validate final key: must be non-empty and not a modifier
+        guard let key = parts.last else { return false }
+        let trimmedKey = key.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmedKey.isEmpty || validModifiers.contains(trimmedKey) {
+            return false
         }
         
         return true

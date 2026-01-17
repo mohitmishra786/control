@@ -1,7 +1,7 @@
 <h1 align="center">Control</h1>
 
 <p align="center">
-  <em>Linux level power for your Mac. One binary to rule them all.</em>
+  <em>Linux-level power for your Mac. One binary to rule them all.</em>
 </p>
 
 <p align="center">
@@ -13,7 +13,7 @@
 
 ## The Problem
 
-macOS power users face a frustrating reality. Fundamental system controls are either missing or locked behind third party paywalls.
+macOS power users face a frustrating reality. Fundamental system controls are either missing or locked behind third-party paywalls.
 
 | Pain Point | Current Workaround | Cost |
 |------------|-------------------|------|
@@ -25,17 +25,17 @@ macOS power users face a frustrating reality. Fundamental system controls are ei
 > "It is unbelievable how bad window management is at macOS. Especially if you use multiple desktops, it's impossible to not kill your workflow."
 > — Hacker News, 2024
 
-Control consolidates these fragmented solutions into a single, free, open source tool.
+Control consolidates these fragmented solutions into a single, free, open-source tool.
 
 ## Features
 
 ### Window Management
 
-**Corner Grab Fix** fixes macOS Tahoe's oversized corner radii (20px) that make window edge grabs imprecise. Uses 1px precision with invisible 5px hit boxes.
+**Corner Grab Fix** fixes macOS Sequoia's oversized corner radii (20px) that make window edge grabs imprecise. Uses 1px precision with invisible 5px hit boxes.
 
-**Tiling Engine** provides keyboard driven layouts including halves, thirds, quarters, and custom zones.
+**Tiling Engine** provides keyboard-driven layouts including halves, thirds, quarters, and custom zones.
 
-**Snap Handler** enables drag to edge snapping with visual feedback overlay.
+**Snap Handler** enables drag-to-edge snapping with visual feedback overlay.
 
 **Display Persistence** remembers window positions when displays reconnect. No more window jumble after waking from sleep.
 
@@ -45,15 +45,15 @@ Control consolidates these fragmented solutions into a single, free, open source
 
 **Per Device Scroll Direction** gives you natural scrolling for trackpad and traditional for mouse. Finally independent.
 
-**Custom Acceleration Curves** support linear, exponential, or custom Bezier interpolation using a Newton Raphson solver.
+**Custom Acceleration Curves** support linear, exponential, or custom Bezier interpolation using a Newton-Raphson solver.
 
-**Gesture Mapping** translates multi finger trackpad gestures to custom actions, integrating with Shortcuts.app.
+**Gesture Mapping** translates multi-finger trackpad gestures to custom actions, integrating with Shortcuts.app.
 
 ### Permission Management (SIP Safe)
 
-> Control never writes directly to TCC.db. All automation uses Apple approved mechanisms.
+> Control never writes directly to TCC.db. All automation uses Apple-approved mechanisms.
 
-**Permission Scanner** performs read only TCC database inspection with categorized display.
+**Permission Scanner** performs read-only TCC database inspection with categorized display.
 
 **UI Automation** clicks Allow buttons automatically using the Accessibility API.
 
@@ -61,7 +61,7 @@ Control consolidates these fragmented solutions into a single, free, open source
 
 **Quarantine Handler** removes quarantine attributes with Touch ID confirmation.
 
-**Trust Lists** fast track trusted apps with pattern matching (for example `com.jetbrains.*`).
+**Trust Lists** fast-track trusted apps with pattern matching (for example `com.jetbrains.*`).
 
 ### UI Consistency
 
@@ -71,7 +71,7 @@ Control consolidates these fragmented solutions into a single, free, open source
 
 **Menu Bar Manager** hides, shows, and reorders menu bar items via SIP safe defaults commands.
 
-**Theme Engine** applies system wide color schemes and dark mode enhancements.
+**Theme Engine** applies system-wide color schemes and dark mode enhancements.
 
 ### Background Daemon
 
@@ -218,7 +218,7 @@ Accessibility permission (for window and input control)
 - [x] UI Harmonizer and Theme Engine
 - [x] Configuration hot reload
 - [x] Daemon with Pulse Monitor
-- [x] Display persistence for multi monitor setups
+- [x] Display persistence for multi-monitor setups
 - [x] Security audit logging
 
 ### Phase 3: Polish (In Progress)
