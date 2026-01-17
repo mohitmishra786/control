@@ -100,7 +100,8 @@ public struct ThemeSettings: Sendable {
 /// - Accent color management
 /// - Enhanced dark mode
 /// - Theme presets
-public final class ThemeEngine: @unchecked Sendable {
+@MainActor
+public final class ThemeEngine {
     
     // MARK: - Singleton
     
@@ -306,7 +307,9 @@ public final class ThemeEngine: @unchecked Sendable {
     private func observeAppearanceChanges() {
         if #available(macOS 12.0, *) {
             appearanceObserver = NSApp.observe(\.effectiveAppearance) { [weak self] _, _ in
-                self?.notifyChangeHandlers()
+                Task { @MainActor in
+                    self?.notifyChangeHandlers()
+                }
             }
         }
     }

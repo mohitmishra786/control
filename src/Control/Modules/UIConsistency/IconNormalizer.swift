@@ -152,13 +152,13 @@ public final class IconNormalizer: @unchecked Sendable {
     
     /// Get icon for an app by bundle ID
     private func iconForApp(_ bundleId: String) -> NSImage? {
-        guard let path = NSWorkspace.shared.absolutePathForApplication(
+        guard let url = NSWorkspace.shared.urlForApplication(
             withBundleIdentifier: bundleId
         ) else {
             return nil
         }
         
-        return NSWorkspace.shared.icon(forFile: path)
+        return NSWorkspace.shared.icon(forFile: url.path)
     }
     
     /// Apply rounded square mask

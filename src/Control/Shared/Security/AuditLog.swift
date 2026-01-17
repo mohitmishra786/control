@@ -42,6 +42,25 @@ public struct AuditEvent: Codable {
         self.details = details
         self.success = success
     }
+    
+    /// Internal initializer that preserves original id, timestamp, and user
+    internal init(
+        id: UUID,
+        timestamp: Date,
+        user: String,
+        type: AuditEventType,
+        action: String,
+        details: [String: String],
+        success: Bool
+    ) {
+        self.id = id
+        self.timestamp = timestamp
+        self.user = user
+        self.type = type
+        self.action = action
+        self.details = details
+        self.success = success
+    }
 }
 
 // MARK: - Audit Log
@@ -213,6 +232,7 @@ public final class AuditLog: @unchecked Sendable {
         let timestamp = dateFormatter.string(from: event.timestamp)
         
         var parts = [
+            event.id.uuidString,
             timestamp,
             event.type.rawValue,
             event.action,
@@ -229,14 +249,18 @@ public final class AuditLog: @unchecked Sendable {
     
     private func parseEvent(_ line: String) -> AuditEvent? {
         let parts = line.components(separatedBy: " ")
-        guard parts.count >= 5 else { return nil }
+        // Format: id timestamp type action user=X success=X [details...]
+        guard parts.count >= 6 else { return nil }
+        
+        guard let id = UUID(uuidString: parts[0]) else { return nil }
         
         let dateFormatter = ISO8601DateFormatter()
-        guard let timestamp = dateFormatter.date(from: parts[0]),
-              let type = AuditEventType(rawValue: parts[1]) else {
+        guard let timestamp = dateFormatter.date(from: parts[1]),
+              let type = AuditEventType(rawValue: parts[2]) else {
             return nil
         }
         
+        let action = parts[3]
         var details: [String: String] = [:]
         var user = ""
         var success = true
@@ -256,14 +280,15 @@ public final class AuditLog: @unchecked Sendable {
             }
         }
         
-        var event = AuditEvent(
+        return AuditEvent(
+            id: id,
+            timestamp: timestamp,
+            user: user,
             type: type,
-            action: parts[2],
+            action: action,
             details: details,
             success: success
         )
-        
-        return event
     }
     
     private func appendToLog(_ entry: String) {

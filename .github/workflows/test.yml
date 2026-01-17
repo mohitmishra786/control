@@ -28,18 +28,16 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-spm-
     
-    - name: Run tests
+    - name: Build
+      run: swift build
+    
+    - name: Run tests with xcodebuild
       run: |
-        # Note: XCTest requires Xcode environment
-        # swift test runs in limited mode without full Xcode
-        swift build
-        
-        # Run with xcodebuild for full test support
+        set -e
         xcodebuild test \
           -scheme Control \
           -destination 'platform=macOS' \
-          -skipPackagePluginValidation \
-          || echo "Tests require Xcode environment"
+          -skipPackagePluginValidation
     
     - name: Test CLI
       run: |

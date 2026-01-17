@@ -65,7 +65,13 @@ public struct BezierAccelerationCurve: Sendable {
     
     /// Create from control point array
     public init?(name: String, controlPoints: [[Double]]) {
+        // Validate we have at least 4 control points
         guard controlPoints.count >= 4 else { return nil }
+        // Validate each control point has at least 2 elements (x, y)
+        guard controlPoints[0].count >= 2,
+              controlPoints[1].count >= 2,
+              controlPoints[2].count >= 2,
+              controlPoints[3].count >= 2 else { return nil }
         
         self.name = name
         self.p0 = CGPoint(x: controlPoints[0][0], y: controlPoints[0][1])

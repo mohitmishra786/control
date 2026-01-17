@@ -216,7 +216,12 @@ public final class SystemInfo: @unchecked Sendable {
         var model = [CChar](repeating: 0, count: size)
         sysctlbyname("hw.model", &model, &size, nil, 0)
         
-        return String(cString: model)
+        // Convert to UInt8 array and decode, truncating null terminator
+        let bytes = model.map { UInt8(bitPattern: $0) }
+        if let nullIndex = bytes.firstIndex(of: 0) {
+            return String(decoding: bytes[0..<nullIndex], as: UTF8.self)
+        }
+        return String(decoding: bytes, as: UTF8.self)
     }
 }
 
