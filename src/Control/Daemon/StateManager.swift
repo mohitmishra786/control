@@ -44,26 +44,7 @@ public struct DeviceSettings: Codable, Sendable {
     public var sensitivity: Double = 1.0
 }
 
-// MARK: - Codable CGRect
-
-/// CGRect wrapper for Codable
-public struct CodableRect: Codable, Sendable {
-    public let x: Double
-    public let y: Double
-    public let width: Double
-    public let height: Double
-    
-    public init(_ rect: CGRect) {
-        self.x = rect.origin.x
-        self.y = rect.origin.y
-        self.width = rect.width
-        self.height = rect.height
-    }
-    
-    public var cgRect: CGRect {
-        return CGRect(x: x, y: y, width: width, height: height)
-    }
-}
+// NOTE: Uses CodableRect from DisplayPersistence.swift
 
 // MARK: - State Manager
 

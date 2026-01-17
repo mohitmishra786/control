@@ -1,0 +1,29 @@
+# Control - Developer Preset
+# Optimized for software development workflows
+
+[core]
+log_level = "info"
+daemon_enabled = true
+
+[window]
+corner_fix_enabled = true
+snap_enabled = true
+tiling_enabled = true
+default_layout = "developer"
+window_gap_px = 4
+
+[input]
+mouse_acceleration_enabled = false
+trackpad_natural_scroll = true
+mouse_natural_scroll = false
+
+[permission]
+developer_mode = true
+ui_automation_enabled = true
+
+[permission.trust_profile]
+active = "developer"
+
+[daemon]
+run_at_load = true
+auto_restart = true

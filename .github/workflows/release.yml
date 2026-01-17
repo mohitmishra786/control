@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Release
+    runs-on: macos-14
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Setup Swift
+      uses: swift-actions/setup-swift@v2
+      with:
+        swift-version: "6.0"
+    
+    - name: Build Release
+      run: swift build -c release
+    
+    - name: Get version
+      id: version
+      run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+    
+    - name: Create package
+      run: |
+        mkdir -p dist
+        cp .build/release/control dist/
+        cp ctl dist/
+        chmod +x dist/ctl
+        cp README.md dist/
+        cp LICENSE dist/
+        
+        # Create tarball
+        cd dist
+        tar -czvf control-${{ steps.version.outputs.version }}-macos.tar.gz *
+        
+        # Calculate checksum
+        shasum -a 256 control-${{ steps.version.outputs.version }}-macos.tar.gz > checksums.txt
+    
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          dist/control-${{ steps.version.outputs.version }}-macos.tar.gz
+          dist/checksums.txt
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
