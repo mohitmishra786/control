@@ -30,7 +30,7 @@ let package = Package(
                 .product(name: "TOMLKit", package: "TOMLKit"),
                 .product(name: "Logging", package: "swift-log")
             ],
-            path: "Sources/Control"
+            path: "src/Control"
         ),
         // Reusable framework for core functionality
         .target(
@@ -39,19 +39,19 @@ let package = Package(
                 .product(name: "TOMLKit", package: "TOMLKit"),
                 .product(name: "Logging", package: "swift-log")
             ],
-            path: "Sources/ControlKit"
+            path: "src/ControlKit"
         ),
         // Unit tests
         .testTarget(
             name: "ControlTests",
             dependencies: ["Control", "ControlKit"],
-            path: "Tests/Unit"
+            path: "tests/Unit"
         ),
         // Integration tests
         .testTarget(
             name: "ControlIntegrationTests",
             dependencies: ["Control", "ControlKit"],
-            path: "Tests/Integration"
+            path: "tests/Integration"
         )
     ]
 )

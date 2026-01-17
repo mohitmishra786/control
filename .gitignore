@@ -12,6 +12,7 @@ Package.resolved
 DerivedData/
 *.xcodeproj
 *.xcworkspace
+docs/
 
 # Control Specific
 .agent/
