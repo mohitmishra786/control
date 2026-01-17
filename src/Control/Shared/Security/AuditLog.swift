@@ -91,8 +91,20 @@ public final class AuditLog: @unchecked Sendable {
     /// Lock for thread-safe writes
     private let writeLock = NSLock()
     
-    /// Enabled state
-    public var isEnabled: Bool = true
+    /// Enabled state (thread-safe)
+    private var _isEnabled: Bool = true
+    public var isEnabled: Bool {
+        get {
+            writeLock.lock()
+            defer { writeLock.unlock() }
+            return _isEnabled
+        }
+        set {
+            writeLock.lock()
+            defer { writeLock.unlock() }
+            _isEnabled = newValue
+        }
+    }
     
     // MARK: - Initialization
     
