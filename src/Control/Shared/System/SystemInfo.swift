@@ -27,7 +27,7 @@ public final class SystemInfo: @unchecked Sendable {
     /// macOS code name
     public var osCodeName: String {
         switch osVersion.majorVersion {
-        case 15: return "Tahoe"
+        case 15: return "Sequoia"
         case 14: return "Sonoma"
         case 13: return "Ventura"
         case 12: return "Monterey"

@@ -1,14 +1,14 @@
+<h1 align="center">Control</h1>
+
+<p align="center">
+  <em>Linux level power for your Mac. One binary to rule them all.</em>
+</p>
+
 <p align="center">
   <img src="https://img.shields.io/badge/macOS-12.0+-blue?style=flat-square" alt="macOS 12.0+">
   <img src="https://img.shields.io/badge/Swift-6.0-orange?style=flat-square" alt="Swift 6.0">
   <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="MIT License">
   <a href="https://x.com/chessMan786"><img src="https://img.shields.io/badge/follow-chessMan786-1DA1F2?style=flat-square&logo=twitter" alt="Twitter"></a>
-</p>
-
-<h1 align="center">Control</h1>
-
-<p align="center">
-  <em>Linux level power for your Mac. One binary to rule them all.</em>
 </p>
 
 ## The Problem
@@ -248,13 +248,9 @@ swift run control --help
 
 Control consolidates ideas from tools that macOS power users have relied on for years:
 
-[Mole](https://github.com/tw93/Mole) demonstrated viral success by consolidating macOS system utilities
-
-[Rectangle](https://github.com/rxhanson/Rectangle) proved the demand for open source window management
-
-[LinearMouse](https://github.com/linearmouse/linearmouse) showed that mouse acceleration control matters
-
-Desktop environments like KDE Plasma, GNOME, and i3 where power user control is built in rather than bolted on
+- [Rectangle](https://github.com/rxhanson/Rectangle) proved the demand for open source window management
+- [LinearMouse](https://github.com/linearmouse/linearmouse) showed that mouse acceleration control matters
+- Desktop environments like KDE Plasma, GNOME, and i3 where power user control is built in rather than bolted on
 
 ## License
 

@@ -14,6 +14,14 @@ IDENTITY="${1:--}"
 BINARY="$PROJECT_DIR/.build/release/control"
 ENTITLEMENTS="$PROJECT_DIR/control.entitlements"
 
+# Determine runtime options based on identity
+# Hardened runtime only works with real signing identities, not ad-hoc (-)
+if [[ "$IDENTITY" == "-" || -z "$IDENTITY" ]]; then
+    RUNTIME_OPTS=""
+else
+    RUNTIME_OPTS="--options runtime"
+fi
+
 if [[ ! -f "$BINARY" ]]; then
     echo "Error: Release binary not found. Run: ./scripts/build.sh release"
     exit 1
@@ -25,14 +33,18 @@ if [[ ! -f "$ENTITLEMENTS" ]]; then
 fi
 
 echo "Signing Control binary..."
+echo "Identity: $IDENTITY"
+echo "Runtime options: ${RUNTIME_OPTS:-none}"
 
 if [[ -n "$ENTITLEMENTS" ]]; then
-    codesign --force --options runtime \
+    # shellcheck disable=SC2086
+    codesign --force $RUNTIME_OPTS \
         --entitlements "$ENTITLEMENTS" \
         --sign "$IDENTITY" \
         "$BINARY"
 else
-    codesign --force --options runtime \
+    # shellcheck disable=SC2086
+    codesign --force $RUNTIME_OPTS \
         --sign "$IDENTITY" \
         "$BINARY"
 fi

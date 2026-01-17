@@ -31,13 +31,10 @@ jobs:
     - name: Build
       run: swift build
     
-    - name: Run tests with xcodebuild
+    - name: Run tests
       run: |
         set -e
-        xcodebuild test \
-          -scheme Control \
-          -destination 'platform=macOS' \
-          -skipPackagePluginValidation
+        swift test --parallel
     
     - name: Test CLI
       run: |

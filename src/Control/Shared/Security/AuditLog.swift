@@ -227,7 +227,26 @@ public final class AuditLog: @unchecked Sendable {
         )
     }
     
+    /// Format event as JSON Line
     private func formatEvent(_ event: AuditEvent) -> String {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        
+        do {
+            let data = try encoder.encode(event)
+            if let jsonString = String(data: data, encoding: .utf8) {
+                return jsonString
+            }
+        } catch {
+            // Fallback to legacy format if encoding fails
+            return formatEventLegacy(event)
+        }
+        
+        return formatEventLegacy(event)
+    }
+    
+    /// Legacy format for backwards compatibility
+    private func formatEventLegacy(_ event: AuditEvent) -> String {
         let dateFormatter = ISO8601DateFormatter()
         let timestamp = dateFormatter.string(from: event.timestamp)
         
@@ -247,7 +266,33 @@ public final class AuditLog: @unchecked Sendable {
         return parts.joined(separator: " ")
     }
     
+    /// Parse event from line (JSON or legacy format)
     private func parseEvent(_ line: String) -> AuditEvent? {
+        // Detect JSON format (starts with '{')
+        if line.hasPrefix("{") {
+            return parseEventJSON(line)
+        }
+        
+        // Fall back to legacy space-delimited format
+        return parseEventLegacy(line)
+    }
+    
+    /// Parse JSON-formatted event
+    private func parseEventJSON(_ line: String) -> AuditEvent? {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        
+        guard let data = line.data(using: .utf8) else { return nil }
+        
+        do {
+            return try decoder.decode(AuditEvent.self, from: data)
+        } catch {
+            return nil
+        }
+    }
+    
+    /// Parse legacy space-delimited event format
+    private func parseEventLegacy(_ line: String) -> AuditEvent? {
         let parts = line.components(separatedBy: " ")
         // Format: id timestamp type action user=X success=X [details...]
         guard parts.count >= 6 else { return nil }

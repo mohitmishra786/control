@@ -117,6 +117,7 @@ public struct RangeValidator<T: Comparable & Numeric>: Validator {
 public enum Validation {
     
     /// Validate a path is safe (not protected)
+    /// This implementation resolves symlinks and normalizes paths to prevent bypass attacks
     public static func isSafePath(_ path: String) -> Bool {
         let protectedPaths = [
             "/System",
@@ -127,10 +128,16 @@ public enum Validation {
             "/sbin"
         ]
         
+        // Expand tilde and normalize the path
         let expandedPath = (path as NSString).expandingTildeInPath
         
+        // Get normalized, symlink-resolved absolute path
+        let url = URL(fileURLWithPath: expandedPath)
+        let resolvedPath = url.standardized.resolvingSymlinksInPath().path
+        
         for protected in protectedPaths {
-            if expandedPath.hasPrefix(protected) {
+            // Check exact match or directory prefix with component boundary
+            if resolvedPath == protected || resolvedPath.hasPrefix(protected + "/") {
                 return false
             }
         }
