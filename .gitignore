@@ -1,0 +1,18 @@
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Swift
+.build/
+Packages/
+Package.pins
+Package.resolved
+.swiftpm/
+DerivedData/
+*.xcodeproj
+*.xcworkspace
+
+# Control Specific
+.agent/
+bin/
