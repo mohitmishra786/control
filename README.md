@@ -20,7 +20,7 @@ macOS power users face a frustrating reality: *fundamental system controls are e
 > *"It is unbelievable how bad window management is at macOS. Especially if you use multiple desktops, it's impossible to not kill your workflow."*
 > — Hacker News, 2024
 
-Control aims to consolidate these fragmented solutions into a **single, free, open-source tool** — following the success pattern of [Mole](https://github.com/tw93/Mole).
+Control aims to consolidate these fragmented solutions into a **single, free, open-source tool**
 
 ---
 
