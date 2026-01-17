@@ -334,6 +334,27 @@ public final class WindowManager: @unchecked Sendable {
         try resize(window: window, to: targetFrame.size)
     }
     
+    /// Move window to a specific frame (position + size)
+    /// - Parameters:
+    ///   - window: The window to move
+    ///   - frame: Target frame
+    /// - Returns: true if successful
+    public func moveWindow(window: Window, to frame: CGRect) -> Bool {
+        do {
+            try move(window: window, to: frame.origin)
+            try resize(window: window, to: frame.size)
+            return true
+        } catch {
+            return false
+        }
+    }
+    
+    /// Get the frontmost (focused) window
+    /// - Returns: The frontmost Window, or nil if none
+    public func getFrontmostWindow() -> Window? {
+        return try? getFocusedWindow()
+    }
+    
     // MARK: - Private Helpers
     
     /// Get bundle identifier from process ID
