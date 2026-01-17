@@ -1,0 +1,170 @@
+# Control - Default Configuration
+# Location: ~/.config/control/control.toml
+#
+# This file contains all configuration options with their defaults.
+# See documentation for detailed explanations.
+
+[core]
+# Logging verbosity: debug, info, warning, error
+log_level = "info"
+
+# Enable daemon auto-start on login
+daemon_enabled = false
+
+# Telemetry (anonymous usage stats)
+telemetry_enabled = false
+
+# Health monitoring
+health_check_interval = 30  # seconds
+
+# ============================================================================
+# WINDOW MANAGEMENT (Mason Module)
+# ============================================================================
+
+[window]
+# Enable corner grab precision fix
+corner_fix_enabled = true
+
+# Invisible hit-box size in pixels (for corner grabs)
+corner_hit_box_px = 5
+
+# Enable drag-to-edge snapping
+snap_enabled = true
+
+# Distance from edge to trigger snap (pixels)
+snap_threshold_px = 20
+
+# Animation duration for snap (milliseconds)
+snap_animation_ms = 150
+
+# Enable keyboard-driven tiling
+tiling_enabled = true
+
+# Default layout preset: developer, designer, writer, minimal
+default_layout = "developer"
+
+# Gap between tiled windows (pixels)
+window_gap_px = 0
+
+# Multi-display persistence
+preserve_positions_on_wake = true
+
+# Position cache database path
+position_cache_path = "~/.config/control/positions.sqlite"
+
+[window.zones]
+# Custom zones (normalized 0-1 coordinates)
+# left_half = { x = 0.0, y = 0.0, width = 0.5, height = 1.0 }
+
+# ============================================================================
+# INPUT CONTROL (Flow Module)
+# ============================================================================
+
+[input]
+# Disable mouse acceleration for 1:1 raw input
+mouse_acceleration_enabled = false
+
+# Custom acceleration curve: linear, smooth, gaming, custom
+acceleration_curve = "linear"
+
+# Per-device scroll direction
+trackpad_natural_scroll = true
+mouse_natural_scroll = false  # Traditional for mice
+
+# Scroll speed multiplier
+scroll_speed = 1.0
+
+# Enable smooth scrolling
+smooth_scrolling = true
+
+[input.acceleration]
+# Custom Bezier control points for acceleration curve
+# Format: [[x1, y1], [x2, y2], ...]
+# custom_curve = [[0.0, 0.0], [0.3, 0.2], [0.7, 0.8], [1.0, 1.0]]
+
+[input.gestures]
+# Gesture mappings (device -> gesture -> action)
+# [input.gestures.trackpad]
+# three_finger_swipe_up = "control window maximize"
+# three_finger_swipe_down = "control window restore"
+
+# ============================================================================
+# PERMISSION MANAGEMENT (Gatekeeper Module)
+# ============================================================================
+
+[permission]
+# Enable developer mode (less prompts for signed apps)
+developer_mode = false
+
+# UI automation for permission dialogs
+ui_automation_enabled = true
+
+# Amnesia method for screen recording (extend timestamp)
+amnesia_method_enabled = false
+
+# Trusted app patterns (bundle IDs)
+# trusted_patterns = ["com.jetbrains.*", "com.microsoft.VSCode"]
+
+[permission.trust_profile]
+# Active trust profile: developer, designer, minimal, custom
+active = "minimal"
+
+# ============================================================================
+# UI CONSISTENCY
+# ============================================================================
+
+[consistency]
+# Standardize traffic light button positions
+traffic_light_normalize = true
+
+# Normalize app icons in Dock
+icon_normalize = false
+
+# Menu bar item management
+menu_bar_enabled = false
+
+[consistency.theme]
+# Theme engine (experimental)
+enabled = false
+
+# Dark mode enhancement
+# enhanced_dark_mode = false
+
+# ============================================================================
+# DAEMON
+# ============================================================================
+
+[daemon]
+# Run in background on startup
+run_at_load = false
+
+# Auto-restart on crash
+auto_restart = true
+
+# Heartbeat interval (seconds)
+heartbeat_interval = 30
+
+# Maximum memory before restart (MB)
+max_memory_mb = 150
+
+# State persistence path
+state_path = "~/.config/control/state.json"
+
+# ============================================================================
+# SECURITY
+# ============================================================================
+
+[security]
+# Require Touch ID for sensitive operations
+require_biometric = true
+
+# Audit log for security events
+audit_log_enabled = true
+audit_log_path = "~/.config/control/audit.log"
+
+# Protected paths (never modify)
+protected_paths = [
+    "/System",
+    "/Library",
+    "/private"
+]

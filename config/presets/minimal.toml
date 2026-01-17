@@ -1,0 +1,29 @@
+# Control - Minimal Preset
+# Essential features only, minimal system footprint
+
+[core]
+log_level = "warning"
+daemon_enabled = false
+telemetry_enabled = false
+
+[window]
+corner_fix_enabled = true
+snap_enabled = false
+tiling_enabled = false
+
+[input]
+mouse_acceleration_enabled = true  # System default
+
+[permission]
+developer_mode = false
+ui_automation_enabled = false
+
+[permission.trust_profile]
+active = "minimal"
+
+[consistency]
+traffic_light_normalize = false
+icon_normalize = false
+
+[daemon]
+run_at_load = false

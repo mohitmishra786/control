@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<!--
+  Control Daemon - LaunchAgent Configuration
+  
+  Install to: ~/Library/LaunchAgents/com.control.daemon.plist
+  
+  Commands:
+    launchctl load ~/Library/LaunchAgents/com.control.daemon.plist
+    launchctl unload ~/Library/LaunchAgents/com.control.daemon.plist
+-->
+<dict>
+    <key>Label</key>
+    <string>com.control.daemon</string>
+    
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/control</string>
+        <string>daemon</string>
+        <string>run</string>
+    </array>
+    
+    <!-- Keep daemon running -->
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+        <key>Crashed</key>
+        <true/>
+    </dict>
+    
+    <!-- Start at login (disabled by default) -->
+    <key>RunAtLoad</key>
+    <false/>
+    
+    <!-- Restart on failure with backoff -->
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+    
+    <!-- CPU and memory limits -->
+    <key>ProcessType</key>
+    <string>Background</string>
+    
+    <key>LowPriorityIO</key>
+    <true/>
+    
+    <!-- Logging -->
+    <key>StandardOutPath</key>
+    <string>/tmp/control-daemon.log</string>
+    
+    <key>StandardErrorPath</key>
+    <string>/tmp/control-daemon.log</string>
+    
+    <!-- Environment -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>CONTROL_CONFIG</key>
+        <string>~/.config/control/control.toml</string>
+    </dict>
+    
+    <!-- Session type for accessibility access -->
+    <key>LimitLoadToSessionType</key>
+    <string>Aqua</string>
+</dict>
+</plist>

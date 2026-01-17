@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Control - Code Signing Entitlements
+  
+  Required for:
+  - Accessibility API access (AXUIElement)
+  - CGEvent tapping
+  - IOKit HID device access
+-->
+<plist version="1.0">
+<dict>
+    <!-- Allow accessibility API access -->
+    <key>com.apple.security.automation.apple-events</key>
+    <true/>
+    
+    <!-- App Sandbox disabled (required for system-level access) -->
+    <key>com.apple.security.app-sandbox</key>
+    <false/>
+    
+    <!-- Allow reading/writing user-selected files -->
+    <key>com.apple.security.files.user-selected.read-write</key>
+    <true/>
+    
+    <!-- Allow reading Downloads folder -->
+    <key>com.apple.security.files.downloads.read-write</key>
+    <true/>
+    
+    <!-- Hardened Runtime -->
+    <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+    <false/>
+    
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <false/>
+    
+    <!-- Allow debugging (for development) -->
+    <key>com.apple.security.cs.debugger</key>
+    <false/>
+    
+    <!-- Allow JIT compilation (disabled) -->
+    <key>com.apple.security.cs.allow-jit</key>
+    <false/>
+</dict>
+</plist>
